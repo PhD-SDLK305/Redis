@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>Hướng Dẫn Toàn Diện về Git & GitHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐙 Hướng Dẫn Toàn Diện về Git & GitHub</h1>
+            <p class="subtitle">Từ cơ bản đến nâng cao - Tất cả những gì bạn cần biết</p>
+        </header>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#intro">Giới Thiệu</a></li>
+                <li><a href="#basics">Cơ Bản</a></li>
+                <li><a href="#commands">Lệnh Git</a></li>
+                <li><a href="#branching">Branching</a></li>
+                <li><a href="#github">GitHub</a></li>
+                <li><a href="#workflow">Workflow</a></li>
+                <li><a href="#advanced">Nâng Cao</a></li>
+            </ul>
+        </nav>
+
+        <section id="intro" class="section">
+            <h2>📚 Giới Thiệu về Git & GitHub</h2>
+            
+            <div class="info-box">
+                <strong>Git</strong> là hệ thống quản lý phiên bản phân tán (Distributed Version Control System) được phát triển bởi Linus Torvalds vào năm 2005.
+            </div>
+
+            <h3>Git là gì?</h3>
+            <p>Git giúp bạn:</p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li>Theo dõi các thay đổi trong mã nguồn</li>
+                <li>Làm việc nhóm hiệu quả</li>
+                <li>Khôi phục các phiên bản cũ</li>
+                <li>Tạo nhánh để phát triển tính năng mới</li>
+                <li>Hợp nhất mã từ nhiều nguồn</li>
+            </ul>
+
+            <h3>GitHub là gì?</h3>
+            <p><strong>GitHub</strong> là một dịch vụ lưu trữ mã nguồn dựa trên Git, cung cấp:</p>
+            <div class="grid">
+                <div class="card">
+                    <h4>🌐 Lưu Trữ Đám Mây</h4>
+                    <p>Lưu trữ repository của bạn trên internet</p>
+                </div>
+                <div class="card">
+                    <h4>👥 Cộng Tác</h4>
+                    <p>Làm việc nhóm với Pull Requests và Issues</p>
+                </div>
+                <div class="card">
+                    <h4>🔍 Khám Phá</h4>
+                    <p>Tìm và học từ hàng triệu dự án mã nguồn mở</p>
+                </div>
+                <div class="card">
+                    <h4>🚀 CI/CD</h4>
+                    <p>Tự động hóa build, test và deploy</p>
+                </div>
+            </div>
+
+            <h3>Kiến Trúc Git</h3>
+            <div class="workflow-diagram">
+                <div class="workflow-step">Working Directory</div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">Staging Area</div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">Local Repository</div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">Remote Repository</div>
+            </div>
+        </section>
+
+        <section id="basics" class="section">
+            <h2>🚀 Cài Đặt & Cấu Hình Cơ Bản</h2>
+
+            <h3>Cài Đặt Git</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Windows (sử dụng Git for Windows hoặc Chocolatey)<br>
+<span class="comment"># Tải từ: https://git-scm.com/download/win</span><br><br>
+
+# macOS<br>
+brew install git<br><br>
+
+# Linux (Ubuntu/Debian)<br>
+sudo apt-get install git<br><br>
+
+# Kiểm tra phiên bản<br>
+git --version
+                </code>
+            </div>
+
+            <h3>Cấu Hình Git Lần Đầu</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Cấu hình tên người dùng<br>
+git config --global user.name "Tên Của Bạn"<br><br>
+
+# Cấu hình email<br>
+git config --global user.email "email@example.com"<br><br>
+
+# Kiểm tra cấu hình<br>
+git config --list<br><br>
+
+# Xem cấu hình cụ thể<br>
+git config user.name<br>
+git config user.email
+                </code>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🎮 Demo: Cấu Hình Git</h3>
+                <input type="text" id="demo-name" class="demo-input" placeholder="Nhập tên của bạn">
+                <input type="email" id="demo-email" class="demo-input" placeholder="Nhập email của bạn">
+                <button class="demo-btn" onclick="generateConfig()">Tạo Lệnh Cấu Hình</button>
+                <div id="demo-config-output" class="demo-output"></div>
+            </div>
+        </section>
+
+        <section id="commands" class="section">
+            <h2>💻 Các Lệnh Git Cơ Bản</h2>
+
+            <h3>Khởi Tạo Repository</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Tạo repository mới trong thư mục hiện tại<br>
+git init<br><br>
+
+# Clone repository từ remote<br>
+git clone https://github.com/username/repository.git<br><br>
+
+# Clone với tên thư mục tùy chỉnh<br>
+git clone https://github.com/username/repository.git my-project
+                </code>
+            </div>
+
+            <h3>Kiểm Tra Trạng Thái</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Xem trạng thái các file<br>
+git status<br><br>
+
+# Xem trạng thái ngắn gọn<br>
+git status -s<br><br>
+
+# Xem các thay đổi chi tiết<br>
+git diff<br><br>
+
+# Xem các thay đổi đã staged<br>
+git diff --staged
+                </code>
+            </div>
+
+            <h3>Thêm & Commit</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Thêm file vào staging area<br>
+git add filename.txt<br><br>
+
+# Thêm tất cả file<br>
+git add .<br><br>
+
+# Thêm file theo pattern<br>
+git add *.js<br><br>
+
+# Commit với message<br>
+git commit -m "Thêm tính năng mới"<br><br>
+
+# Commit với message dài<br>
+git commit -m "Tiêu đề" -m "Mô tả chi tiết"<br><br>
+
+# Thêm và commit cùng lúc (chỉ với file đã tracked)<br>
+git commit -am "Thay đổi nhanh"
+                </code>
+            </div>
+
+            <h3>Xem Lịch Sử</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Xem lịch sử commit<br>
+git log<br><br>
+
+# Xem lịch sử dạng một dòng<br>
+git log --oneline<br><br>
+
+# Xem lịch sử với graph<br>
+git log --oneline --graph --all<br><br>
+
+# Xem lịch sử với thống kê<br>
+git log --stat<br><br>
+
+# Xem thay đổi của một commit<br>
+git show &lt;commit-hash&gt;
+                </code>
+            </div>
+
+            <h3>Hoàn Tác Thay Đổi</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Bỏ thay đổi trong working directory<br>
+git restore filename.txt<br><br>
+
+# Bỏ tất cả thay đổi chưa staged<br>
+git restore .<br><br>
+
+# Unstage file (giữ thay đổi)<br>
+git restore --staged filename.txt<br><br>
+
+# Sửa commit message của commit cuối<br>
+git commit --amend -m "Message mới"<br><br>
+
+# Thêm file vào commit cuối<br>
+git add forgotten-file.txt<br>
+git commit --amend --no-edit
+                </code>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Cảnh Báo:</strong> Các lệnh hoàn tác có thể mất dữ liệu. Luôn commit hoặc stash thay đổi quan trọng trước khi hoàn tác.
+            </div>
+        </section>
+
+        <section id="branching" class="section">
+            <h2>🌿 Branching & Merging</h2>
+
+            <h3>Quản Lý Branch</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Xem danh sách branch<br>
+git branch<br><br>
+
+# Xem tất cả branch (kể cả remote)<br>
+git branch -a<br><br>
+
+# Tạo branch mới<br>
+git branch feature-branch<br><br>
+
+# Chuyển sang branch<br>
+git checkout feature-branch<br><br>
+
+# Tạo và chuyển sang branch mới<br>
+git checkout -b feature-branch<br><br>
+
+# Xóa branch<br>
+git branch -d feature-branch<br><br>
+
+# Xóa branch cứng (force delete)<br>
+git branch -D feature-branch
+                </code>
+            </div>
+
+            <h3>Merging</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Merge branch vào branch hiện tại<br>
+git merge feature-branch<br><br>
+
+# Merge với no-fast-forward (tạo merge commit)<br>
+git merge --no-ff feature-branch<br><br>
+
+# Hủy merge đang diễn ra<br>
+git merge --abort
+                </code>
+            </div>
+
+            <h3>Rebase</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Rebase branch hiện tại lên branch khác<br>
+git rebase main<br><br>
+
+# Rebase tương tác (sửa commit)<br>
+git rebase -i HEAD~3<br><br>
+
+# Tiếp tục rebase sau khi giải quyết conflict<br>
+git rebase --continue<br><br>
+
+# Hủy rebase<br>
+git rebase --abort
+                </code>
+            </div>
+
+            <div class="info-box">
+                <strong>Merge vs Rebase:</strong><br>
+                - <strong>Merge</strong>: Giữ nguyên lịch sử, tạo merge commit<br>
+                - <strong>Rebase</strong>: Làm phẳng lịch sử, không tạo merge commit (phù hợp cho feature branch)
+            </div>
+
+            <h3>Stash (Tạm Lưu Thay Đổi)</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Lưu thay đổi tạm thời<br>
+git stash<br><br>
+
+# Lưu với message<br>
+git stash save "Đang làm tính năng X"<br><br>
+
+# Xem danh sách stash<br>
+git stash list<br><br>
+
+# Áp dụng stash gần nhất (giữ stash)<br>
+git stash apply<br><br>
+
+# Áp dụng và xóa stash<br>
+git stash pop<br><br>
+
+# Xóa stash<br>
+git stash drop stash@{0}
+                </code>
+            </div>
+        </section>
+
+        <section id="github" class="section">
+            <h2>🐙 GitHub - Làm Việc Với Remote</h2>
+
+            <h3>Kết Nối Với Remote Repository</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Xem danh sách remote<br>
+git remote -v<br><br>
+
+# Thêm remote repository<br>
+git remote add origin https://github.com/username/repo.git<br><br>
+
+# Thay đổi URL remote<br>
+git remote set-url origin https://github.com/username/new-repo.git<br><br>
+
+# Xóa remote<br>
+git remote remove origin<br><br>
+
+# Xem thông tin remote<br>
+git remote show origin
+                </code>
+            </div>
+
+            <h3>Push & Pull</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Push branch lên remote<br>
+git push origin main<br><br>
+
+# Push lần đầu (set upstream)<br>
+git push -u origin main<br><br>
+
+# Push tất cả branch<br>
+git push --all origin<br><br>
+
+# Push tags<br>
+git push --tags<br><br>
+
+# Pull từ remote<br>
+git pull origin main<br><br>
+
+# Fetch (tải về nhưng không merge)<br>
+git fetch origin<br><br>
+
+# Merge sau khi fetch<br>
+git merge origin/main
+                </code>
+            </div>
+
+            <h3>GitHub Features</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4>🔀 Pull Request</h4>
+                    <p>Đề xuất thay đổi và yêu cầu review code trước khi merge vào main branch</p>
+                </div>
+                <div class="card">
+                    <h4>🐛 Issues</h4>
+                    <p>Theo dõi bugs, tính năng mới, và các task trong dự án</p>
+                </div>
+                <div class="card">
+                    <h4>🏷️ Tags & Releases</h4>
+                    <p>Đánh dấu các phiên bản quan trọng của dự án</p>
+                </div>
+                <div class="card">
+                    <h4>👥 Collaborators</h4>
+                    <p>Mời người khác cùng làm việc trên repository</p>
+                </div>
+                <div class="card">
+                    <h4>🔒 Branch Protection</h4>
+                    <p>Bảo vệ branch quan trọng khỏi thay đổi trực tiếp</p>
+                </div>
+                <div class="card">
+                    <h4>⚙️ GitHub Actions</h4>
+                    <p>Tự động hóa CI/CD pipeline</p>
+                </div>
+            </div>
+
+            <h3>Fork & Clone</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Clone repository từ GitHub<br>
+git clone https://github.com/username/repo.git<br><br>
+
+# Clone với SSH<br>
+git clone git@github.com:username/repo.git<br><br>
+
+# Clone chỉ một branch<br>
+git clone -b branch-name https://github.com/username/repo.git<br><br>
+
+# Fork workflow (sau khi fork trên GitHub)<br>
+git remote add upstream https://github.com/original-owner/repo.git<br>
+git fetch upstream<br>
+git merge upstream/main
+                </code>
+            </div>
+        </section>
+
+        <section id="workflow" class="section">
+            <h2>🔄 Git Workflows</h2>
+
+            <h3>Git Flow</h3>
+            <div class="workflow-diagram">
+                <div class="workflow-step">main</div>
+                <div class="workflow-step">develop</div>
+                <div class="workflow-step">feature/*</div>
+                <div class="workflow-step">release/*</div>
+                <div class="workflow-step">hotfix/*</div>
+            </div>
+            <p style="margin-top: 20px;">
+                <strong>Git Flow</strong> là workflow phổ biến với các branch:
+            </p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li><strong>main</strong>: Production code, luôn stable</li>
+                <li><strong>develop</strong>: Development branch chính</li>
+                <li><strong>feature/*</strong>: Tính năng mới</li>
+                <li><strong>release/*</strong>: Chuẩn bị release</li>
+                <li><strong>hotfix/*</strong>: Sửa lỗi khẩn cấp</li>
+            </ul>
+
+            <h3>GitHub Flow</h3>
+            <div class="workflow-diagram">
+                <div class="workflow-step">main</div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">feature branch</div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">Pull Request</div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">Merge to main</div>
+            </div>
+            <p style="margin-top: 20px;">
+                <strong>GitHub Flow</strong> đơn giản hơn, phù hợp cho:
+            </p>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li>Dự án nhỏ đến trung bình</li>
+                <li>Deploy thường xuyên</li>
+                <li>Team nhỏ</li>
+            </ul>
+
+            <h3>Workflow Thực Tế</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+<span class="comment"># 1. Tạo feature branch</span><br>
+git checkout -b feature/new-feature<br><br>
+
+<span class="comment"># 2. Làm việc và commit</span><br>
+git add .<br>
+git commit -m "Thêm tính năng mới"<br><br>
+
+<span class="comment"># 3. Push lên GitHub</span><br>
+git push -u origin feature/new-feature<br><br>
+
+<span class="comment"># 4. Tạo Pull Request trên GitHub</span><br>
+<span class="comment"># (Làm trên web interface)</span><br><br>
+
+<span class="comment"># 5. Sau khi PR được merge, cập nhật local</span><br>
+git checkout main<br>
+git pull origin main<br>
+git branch -d feature/new-feature
+                </code>
+            </div>
+        </section>
+
+        <section id="advanced" class="section">
+            <h2>⚡ Kỹ Thuật Nâng Cao</h2>
+
+            <h3>Tags</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Tạo lightweight tag<br>
+git tag v1.0.0<br><br>
+
+# Tạo annotated tag (khuyến nghị)<br>
+git tag -a v1.0.0 -m "Release version 1.0.0"<br><br>
+
+# Xem danh sách tags<br>
+git tag<br><br>
+
+# Xem thông tin tag<br>
+git show v1.0.0<br><br>
+
+# Xóa tag<br>
+git tag -d v1.0.0<br><br>
+
+# Push tag lên remote<br>
+git push origin v1.0.0<br><br>
+
+# Push tất cả tags<br>
+git push --tags
+                </code>
+            </div>
+
+            <h3>Cherry-pick</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Áp dụng một commit cụ thể vào branch hiện tại<br>
+git cherry-pick &lt;commit-hash&gt;<br><br>
+
+# Cherry-pick nhiều commit<br>
+git cherry-pick &lt;commit1&gt; &lt;commit2&gt;<br><br>
+
+# Cherry-pick một range<br>
+git cherry-pick &lt;start-commit&gt;..&lt;end-commit&gt;
+                </code>
+            </div>
+
+            <h3>Reset vs Revert</h3>
+            <table>
+                <tr>
+                    <th>Lệnh</th>
+                    <th>Mô Tả</th>
+                    <th>Khi Nào Dùng</th>
+                </tr>
+                <tr>
+                    <td><code>git reset --soft</code></td>
+                    <td>Di chuyển HEAD, giữ thay đổi trong staging</td>
+                    <td>Sửa commit message</td>
+                </tr>
+                <tr>
+                    <td><code>git reset --mixed</code></td>
+                    <td>Di chuyển HEAD, giữ thay đổi trong working dir</td>
+                    <td>Unstage và giữ thay đổi</td>
+                </tr>
+                <tr>
+                    <td><code>git reset --hard</code></td>
+                    <td>Di chuyển HEAD, xóa tất cả thay đổi</td>
+                    <td>Hủy hoàn toàn thay đổi</td>
+                </tr>
+                <tr>
+                    <td><code>git revert</code></td>
+                    <td>Tạo commit mới để hoàn tác</td>
+                    <td>Hoàn tác commit đã push</td>
+                </tr>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Lưu ý:</strong> Không dùng <code>git reset --hard</code> trên commit đã push lên remote và có người khác đang dùng!
+            </div>
+
+            <h3>Submodules</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Thêm submodule<br>
+git submodule add https://github.com/user/repo.git path/to/submodule<br><br>
+
+# Clone repository có submodule<br>
+git clone --recursive https://github.com/user/repo.git<br><br>
+
+# Hoặc sau khi clone<br>
+git submodule init<br>
+git submodule update<br><br>
+
+# Cập nhật submodule<br>
+git submodule update --remote
+                </code>
+            </div>
+
+            <h3>Git Hooks</h3>
+            <div class="info-box">
+                Git hooks là các script tự động chạy tại các sự kiện cụ thể trong Git. Chúng nằm trong thư mục <code>.git/hooks/</code>
+            </div>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+<span class="comment"># Các hook phổ biến:</span><br>
+<span class="comment"># pre-commit: Chạy trước khi commit</span><br>
+<span class="comment"># pre-push: Chạy trước khi push</span><br>
+<span class="comment"># post-merge: Chạy sau khi merge</span><br>
+<span class="comment"># commit-msg: Validate commit message</span>
+                </code>
+            </div>
+
+            <h3>Aliases (Tên Viết Tắt)</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+# Tạo alias<br>
+git config --global alias.st status<br>
+git config --global alias.co checkout<br>
+git config --global alias.br branch<br>
+git config --global alias.ci commit<br>
+git config --global alias.unstage 'reset HEAD --'<br>
+git config --global alias.last 'log -1 HEAD'<br>
+git config --global alias.visual '!gitk'<br><br>
+
+# Sử dụng alias<br>
+git st  <span class="comment"># thay vì git status</span><br>
+git co -b feature  <span class="comment"># thay vì git checkout -b feature</span>
+                </code>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📋 Bảng Tóm Tắt Lệnh</h2>
+            <table>
+                <tr>
+                    <th>Lệnh</th>
+                    <th>Mô Tả</th>
+                    <th>Độ Khó</th>
+                </tr>
+                <tr>
+                    <td><code>git init</code></td>
+                    <td>Khởi tạo repository</td>
+                    <td><span class="badge badge-basic">Cơ Bản</span></td>
+                </tr>
+                <tr>
+                    <td><code>git clone</code></td>
+                    <td>Sao chép repository</td>
+                    <td><span class="badge badge-basic">Cơ Bản</span></td>
+                </tr>
+                <tr>
+                    <td><code>git add</code></td>
+                    <td>Thêm file vào staging</td>
+                    <td><span class="badge badge-basic">Cơ Bản</span></td>
+                </tr>
+                <tr>
+                    <td><code>git commit</code></td>
+                    <td>Tạo commit</td>
+                    <td><span class="badge badge-basic">Cơ Bản</span></td>
+                </tr>
+                <tr>
+                    <td><code>git push</code></td>
+                    <td>Đẩy lên remote</td>
+                    <td><span class="badge badge-basic">Cơ Bản</span></td>
+                </tr>
+                <tr>
+                    <td><code>git pull</code></td>
+                    <td>Kéo từ remote</td>
+                    <td><span class="badge badge-basic">Cơ Bản</span></td>
+                </tr>
+                <tr>
+                    <td><code>git branch</code></td>
+                    <td>Quản lý branch</td>
+                    <td><span class="badge badge-intermediate">Trung Bình</span></td>
+                </tr>
+                <tr>
+                    <td><code>git merge</code></td>
+                    <td>Hợp nhất branch</td>
+                    <td><span class="badge badge-intermediate">Trung Bình</span></td>
+                </tr>
+                <tr>
+                    <td><code>git rebase</code></td>
+                    <td>Rebase branch</td>
+                    <td><span class="badge badge-advanced">Nâng Cao</span></td>
+                </tr>
+                <tr>
+                    <td><code>git stash</code></td>
+                    <td>Tạm lưu thay đổi</td>
+                    <td><span class="badge badge-intermediate">Trung Bình</span></td>
+                </tr>
+                <tr>
+                    <td><code>git reset</code></td>
+                    <td>Hoàn tác commit</td>
+                    <td><span class="badge badge-advanced">Nâng Cao</span></td>
+                </tr>
+                <tr>
+                    <td><code>git revert</code></td>
+                    <td>Tạo commit hoàn tác</td>
+                    <td><span class="badge badge-advanced">Nâng Cao</span></td>
+                </tr>
+                <tr>
+                    <td><code>git cherry-pick</code></td>
+                    <td>Áp dụng commit cụ thể</td>
+                    <td><span class="badge badge-advanced">Nâng Cao</span></td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2>💡 Best Practices</h2>
+            
+            <h3>Commit Messages</h3>
+            <div class="success-box">
+                <strong>✅ Tốt:</strong><br>
+                <code>feat: Thêm tính năng đăng nhập</code><br>
+                <code>fix: Sửa lỗi hiển thị trên mobile</code><br>
+                <code>docs: Cập nhật README</code>
+            </div>
+            <div class="warning-box">
+                <strong>❌ Không tốt:</strong><br>
+                <code>update</code><br>
+                <code>fix bug</code><br>
+                <code>changes</code>
+            </div>
+
+            <h3>Conventional Commits</h3>
+            <ul style="margin-left: 30px; margin-top: 10px;">
+                <li><code>feat:</code> Tính năng mới</li>
+                <li><code>fix:</code> Sửa lỗi</li>
+                <li><code>docs:</code> Thay đổi tài liệu</li>
+                <li><code>style:</code> Formatting, thiếu semicolon, etc.</li>
+                <li><code>refactor:</code> Refactor code</li>
+                <li><code>test:</code> Thêm test</li>
+                <li><code>chore:</code> Cập nhật build tasks, dependencies</li>
+            </ul>
+
+            <h3>Branch Naming</h3>
+            <div class="command-box">
+                <code>
+<span class="comment"># Tốt:</span><br>
+feature/user-authentication<br>
+bugfix/login-error<br>
+hotfix/security-patch<br>
+release/v1.2.0<br><br>
+
+<span class="comment"># Không tốt:</span><br>
+new-feature<br>
+fix<br>
+test
+                </code>
+            </div>
+
+            <h3>Gitignore</h3>
+            <div class="command-box">
+                <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                <code>
+<span class="comment"># Dependencies</span><br>
+node_modules/<br>
+vendor/<br><br>
+
+<span class="comment"># Build outputs</span><br>
+dist/<br>
+build/<br>
+*.class<br><br>
+
+<span class="comment"># Environment files</span><br>
+.env<br>
+.env.local<br><br>
+
+<span class="comment"># IDE</span><br>
+.idea/<br>
+.vscode/<br>
+*.swp<br><br>
+
+<span class="comment"># OS</span><br>
+.DS_Store<br>
+Thumbs.db
+                </code>
+            </div>
+        </section>
+
+        <footer>
+            <p>📚 <strong>Hướng Dẫn Toàn Diện về Git & GitHub</strong></p>
+            <p>Được tạo với ❤️ để giúp bạn học Git và GitHub hiệu quả</p>
+            <p style="margin-top: 10px; color: #666;">
+                💡 Tip: Thực hành thường xuyên là cách tốt nhất để thành thạo Git!
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
